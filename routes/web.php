@@ -20,9 +20,7 @@ use App\Http\Controllers\AdminTracerController;
 use App\Http\Controllers\AdminTestimoniController;
 
 
-Route::get('/', function () {
-    return view('users.home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 // Normal Users Routes
 Route::middleware(['auth', 'user-access:user'])->group(function () {
@@ -99,13 +97,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/sekolah/edit/{sekolah}', [SekolahController::class, 'edit'])->name('admin.sekolah.edit');
     Route::put('/admin/sekolah/{sekolah}', [SekolahController::class, 'update'])->name('admin.sekolah.update');
     Route::delete('/admin/sekolah/{sekolah}', [SekolahController::class, 'destroy'])->name('admin.sekolah.destroy');
-});
 
-// User Routes untuk melihat profil sekolah (di luar middleware)
-Route::get('/sekolah/profile', [SekolahController::class, 'showProfile'])->name('sekolah.profile');
-
-// Admin Routes
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     
     // Alumni Management
@@ -124,6 +116,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/testimoni', [AdminTestimoniController::class, 'index'])->name('admin.testimoni');
     Route::delete('/testimoni/{testimoni}', [AdminTestimoniController::class, 'destroy'])->name('admin.testimoni.destroy');
 });
+
+// User Routes untuk melihat profil sekolah (di luar middleware)
+Route::get('/sekolah/profile', [SekolahController::class, 'showProfile'])->name('sekolah.profile');
 
 require __DIR__.'/auth.php';
 

@@ -187,61 +187,87 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Alumni per Year Chart
-    const alumniYearCtx = document.getElementById('alumniPerYearChart').getContext('2d');
-    new Chart(alumniYearCtx, {
-        type: 'bar',
-        data: {
-            labels: ['2019', '2020', '2021', '2022', '2023'],
-            datasets: [{
-                label: 'Jumlah Alumni',
-                data: [65, 75, 82, 78, 88],
-                backgroundColor: 'rgba(78, 115, 223, 0.5)',
-                borderColor: 'rgba(78, 115, 223, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+    // Debug: Let's first check if we're getting the data
+    console.log('Chart Data:', {
+        alumniYearData: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')->pluck('tahun_lulus')) !!},
+        alumniCounts: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')
+            ->get()
+            ->map(function($tahun) {
+                return $tahun->alumni()->count();
+            })) !!},
+        statusLabels: {!! json_encode(\App\Models\StatusAlumni::pluck('status')) !!},
+        statusCounts: {!! json_encode(\App\Models\StatusAlumni::all()->map(function($status) {
+            return \App\Models\Alumni::where('id_status_alumni', $status->id_status_alumni)->count();
+        })) !!}
     });
 
-    // Employment Status Chart
-    const employmentCtx = document.getElementById('employmentStatusChart').getContext('2d');
-    new Chart(employmentCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Bekerja', 'Kuliah', 'Belum Update'],
-            datasets: [{
-                data: [
-                    {{ \App\Models\TracerKerja::count() }},
-                    {{ \App\Models\TracerKuliah::count() }},
-                    {{ \App\Models\Alumni::count() - \App\Models\TracerKerja::count() - \App\Models\TracerKuliah::count() }}
-                ],
-                backgroundColor: [
-                    'rgba(40, 167, 69, 0.8)',
-                    'rgba(23, 162, 184, 0.8)',
-                    'rgba(108, 117, 125, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(40, 167, 69, 1)',
-                    'rgba(23, 162, 184, 1)',
-                    'rgba(108, 117, 125, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
+    // Wait for DOM to be ready
+    window.addEventListener('load', function() {
+        try {
+            // Alumni per Year Chart
+            const alumniYearCtx = document.getElementById('alumniPerYearChart');
+            if (!alumniYearCtx) {
+                console.error('Cannot find alumniPerYearChart canvas element');
+                return;
             }
+
+            new Chart(alumniYearCtx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')->pluck('tahun_lulus')) !!},
+                    datasets: [{
+                        label: 'Jumlah Alumni',
+                        data: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')
+                            ->get()
+                            ->map(function($tahun) {
+                                return $tahun->alumni()->count();
+                            })) !!},
+                        backgroundColor: 'rgba(78, 115, 223, 0.5)',
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Employment Status Chart
+            const employmentCtx = document.getElementById('employmentStatusChart');
+            if (!employmentCtx) {
+                console.error('Cannot find employmentStatusChart canvas element');
+                return;
+            }
+
+            new Chart(employmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: {!! json_encode(\App\Models\StatusAlumni::pluck('status')) !!},
+                    datasets: [{
+                        data: {!! json_encode(\App\Models\StatusAlumni::all()->map(function($status) {
+                            return \App\Models\Alumni::where('id_status_alumni', $status->id_status_alumni)->count();
+                        })) !!},
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(40, 167, 69, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(23, 162, 184, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        } catch (error) {
+            console.error('Error creating charts:', error);
         }
     });
 </script>
