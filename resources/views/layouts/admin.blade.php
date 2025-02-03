@@ -75,6 +75,14 @@
                 <li><a class="dropdown-item" href="{{ route('admin.sekolah.index') }}">Profil Sekolah</a></li>
             </ul>
         </div>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Alumni
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('admin.alumni.index') }}">Data Alumni</a></li>
+            </ul>
+        </div>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf

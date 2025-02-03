@@ -12,7 +12,7 @@ class AdminAlumniController extends Controller
 {
     public function index()
     {
-        $alumni = Alumni::with(['tahunLulus', 'konsentrasiKeahlian', 'tracerKerja', 'tracerKuliah'])
+        $alumni = Alumni::with(['konsentrasiKeahlian', 'tahunLulus', 'tracerKerja', 'tracerKuliah'])
             ->latest()
             ->paginate(10);
             
@@ -87,5 +87,11 @@ class AdminAlumniController extends Controller
 
         return redirect()->route('admin.alumni.index')
             ->with('success', 'Data alumni berhasil dihapus');
+    }
+
+    public function show(Alumni $alumni)
+    {
+        $alumni->load(['konsentrasiKeahlian', 'tahunLulus', 'tracerKerja', 'tracerKuliah', 'testimoni']);
+        return view('admin.alumni.show', compact('alumni'));
     }
 } 

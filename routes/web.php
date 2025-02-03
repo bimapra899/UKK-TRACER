@@ -102,6 +102,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     
     // Alumni Management
     Route::get('/alumni', [AdminAlumniController::class, 'index'])->name('admin.alumni.index');
+    Route::get('/alumni/{alumni}/detail', [AdminAlumniController::class, 'show'])->name('admin.alumni.show');
     Route::get('/alumni/create', [AdminAlumniController::class, 'create'])->name('admin.alumni.create');
     Route::post('/alumni', [AdminAlumniController::class, 'store'])->name('admin.alumni.store');
     Route::get('/alumni/{alumni}/edit', [AdminAlumniController::class, 'edit'])->name('admin.alumni.edit');
