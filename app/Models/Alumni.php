@@ -10,7 +10,7 @@ class Alumni extends Model
     protected $primaryKey = 'id_alumni';
     
     protected $fillable = [
-        'user_id',
+        'id_alumni',
         'id_tahun_lulus',
         'id_konsentrasi_keahlian',
         'id_status_alumni',
@@ -33,7 +33,7 @@ class Alumni extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'id_alumni');
     }
 
     public function konsentrasiKeahlian()

@@ -9,11 +9,7 @@ class Testimoni extends Model
     protected $table = 'tbl_testimoni';
     protected $primaryKey = 'id_testimoni';
     
-    protected $fillable = [
-        'id_alumni',
-        'testimoni',
-        'tgl_testimoni'
-    ];
+    protected $fillable = ['id_alumni', 'testimoni', 'tgl_testimoni'];
 
     // Cast dates to Carbon instances
     protected $casts = [
@@ -22,6 +18,6 @@ class Testimoni extends Model
 
     public function alumni()
     {
-        return $this->belongsTo(Alumni::class, 'id_alumni');
+        return $this->belongsTo(Alumni::class, 'id_alumni', 'id_alumni');
     }
 } 

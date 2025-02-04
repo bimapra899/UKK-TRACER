@@ -47,7 +47,7 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <h4 class="text-center py-3">Admin Panel</h4>
+        <h4 class="text-center py-3 mt-2">Admin Panel</h4>
         <a href="/admin/home">Dashboard</a>
         <div class="dropdown">
             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

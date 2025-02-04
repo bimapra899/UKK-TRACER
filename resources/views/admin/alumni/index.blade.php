@@ -3,11 +3,15 @@
 @section('content')
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">Data Alumni</h1>
+    <a href="{{ route('admin.home') }}" class="btn btn-secondary m-3">
+            <i class="fas fa-arrow-left mb-2"></i> Kembali
+        </a>
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Alumni</h6>
         </div>
+        
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -27,7 +31,7 @@
                             <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
                             <td>{{ $data->nisn }}</td>
                             <td>{{ $data->tahunLulus->tahun_lulus ?? '-' }}</td>
-                            <td>{{ $data->konsentrasiKeahlian->nama_konsentrasi ?? '-' }}</td>
+                            <td>{{ $data->konsentrasiKeahlian->konsentrasi_keahlian ?? '-' }}</td>
                             <td>
                                 @if($data->tracerKerja)
                                     <span class="badge bg-success">Bekerja</span>

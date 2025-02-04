@@ -11,5 +11,9 @@ class AdminDashboardController extends Controller
         return view('admindashboard'); // Mengarahkan ke view adminDashboard.blade.php
         
     }
+
+    
     
 }
+
+

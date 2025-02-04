@@ -12,4 +12,9 @@ class TahunLulus extends Model
     protected $table = 'tb_tahun_lulus';
     protected $primaryKey = 'id_tahun_lulus';
     protected $fillable = ['tahun_lulus', 'keterangan'];
+
+    public function alumni()
+    {
+        return $this->belongsTo(Alumni::class, 'id_alumni');
+    }
 }

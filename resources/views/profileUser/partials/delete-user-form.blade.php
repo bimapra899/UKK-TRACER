@@ -1,4 +1,4 @@
-<section class="mt-8 bg-white rounded-lg shadow-sm overflow-hidden">
+<!-- <section class="mt-8 bg-white rounded-lg shadow-sm overflow-hidden">
     <header class="p-6 bg-gray-50 border-b border-gray-100">
         <h2 class="text-xl font-semibold text-gray-900">
             {{ __('Delete Account') }}
@@ -13,7 +13,7 @@
             <i class="fas fa-trash-alt me-2"></i>{{ __('Delete Account') }}
         </button>
 
-        <!-- Modal Konfirmasi Delete -->
+        <Modal Konfirmasi Delete 
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -54,4 +54,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->

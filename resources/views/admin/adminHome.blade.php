@@ -20,7 +20,7 @@
 @endsection
 
 @section('content')
-    <h1 class="text-center mb-4">Selamat Datang, Admin!</h1>
+    <h1 class="text-center mb-4 mt-3">Selamat Datang, Admin!</h1>
     <p class="text-center text-muted">Berikut adalah menu yang tersedia untuk pengelolaan sistem.</p>
     <div class="row justify-content-center">
         <!-- Alumni Management Card -->
@@ -108,7 +108,7 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Tahun Lulus</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,7 +116,7 @@
                                     <tr>
                                         <td>{{ $alumni->nama_depan }} {{ $alumni->nama_belakang }}</td>
                                         <td>{{ $alumni->tahunLulus->tahun_lulus ?? '-' }}</td>
-                                        <td>
+                                        <!-- <td>
                                             @if($alumni->tracerKerja()->exists())
                                                 <span class="badge badge-success">Bekerja</span>
                                             @elseif($alumni->tracerKuliah()->exists())
@@ -124,7 +124,7 @@
                                             @else
                                                 <span class="badge badge-secondary">Belum Update</span>
                                             @endif
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -138,8 +138,8 @@
         <div class="col-xl-6 mb-4">
             <div class="card shadow">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <a href="{{ route('admin.testimoni.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
                     <h6 class="m-0 font-weight-bold text-warning">Testimoni Terbaru</h6>
-                    <a href="{{ route('admin.testimoni') }}" class="btn btn-sm btn-warning">Lihat Semua</a>
                 </div>
                 <div class="card-body">
                     @foreach(\App\Models\Testimoni::with('alumni')->latest()->take(3)->get() as $testimoni)
@@ -155,120 +155,48 @@
             </div>
         </div>
     </div>
-
-    <!-- Statistics Charts -->
-    <div class="row mt-4">
-        <!-- Alumni per Tahun Chart -->
-        <div class="col-xl-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Statistik Alumni per Tahun</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="alumniPerYearChart" width="400" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Employment Status Chart -->
-        <div class="col-xl-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-success">Status Alumni</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="employmentStatusChart" width="400" height="300"></canvas>
-                </div>
-            </div>
-        </div>
+ 
+    <div class="container">
+    <div style="width: 300px; height: 300px; margin: auto; align-content: center;">
+        <canvas id="pieChart"></canvas> <!-- Diagram ukuran kecil -->
     </div>
-@endsection
 
-@section('scripts')
+</div>
+
+<!-- Tambahkan Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    // Debug: Let's first check if we're getting the data
-    console.log('Chart Data:', {
-        alumniYearData: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')->pluck('tahun_lulus')) !!},
-        alumniCounts: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')
-            ->get()
-            ->map(function($tahun) {
-                return $tahun->alumni()->count();
-            })) !!},
-        statusLabels: {!! json_encode(\App\Models\StatusAlumni::pluck('status')) !!},
-        statusCounts: {!! json_encode(\App\Models\StatusAlumni::all()->map(function($status) {
-            return \App\Models\Alumni::where('id_status_alumni', $status->id_status_alumni)->count();
-        })) !!}
-    });
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('pieChart').getContext('2d');
 
-    // Wait for DOM to be ready
-    window.addEventListener('load', function() {
-        try {
-            // Alumni per Year Chart
-            const alumniYearCtx = document.getElementById('alumniPerYearChart');
-            if (!alumniYearCtx) {
-                console.error('Cannot find alumniPerYearChart canvas element');
-                return;
-            }
-
-            new Chart(alumniYearCtx, {
-                type: 'bar',
-                data: {
-                    labels: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')->pluck('tahun_lulus')) !!},
-                    datasets: [{
-                        label: 'Jumlah Alumni',
-                        data: {!! json_encode(\App\Models\TahunLulus::orderBy('tahun_lulus')
-                            ->get()
-                            ->map(function($tahun) {
-                                return $tahun->alumni()->count();
-                            })) !!},
-                        backgroundColor: 'rgba(78, 115, 223, 0.5)',
-                        borderColor: 'rgba(78, 115, 223, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+        var pieChart = new Chart(ctx, {
+            type: 'pie', // Jenis chart: Pie Chart
+            data: {
+                labels: ['Total Alumni','alumni bekerja', 'alumni kuliah',], // Label data
+                datasets: [{
+                    label: 'Data Alumni',
+                    data: [3,2,1, ], // Contoh data
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(51, 54, 56, 0.6)',
+                        'rgba(71, 182, 43, 0.6)',
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Mengatur agar ukuran bisa diatur bebas
+                plugins: {
+                    legend: {
+                        position: 'bottom' // Posisi legenda
                     }
                 }
-            });
-
-            // Employment Status Chart
-            const employmentCtx = document.getElementById('employmentStatusChart');
-            if (!employmentCtx) {
-                console.error('Cannot find employmentStatusChart canvas element');
-                return;
             }
-
-            new Chart(employmentCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: {!! json_encode(\App\Models\StatusAlumni::pluck('status')) !!},
-                    datasets: [{
-                        data: {!! json_encode(\App\Models\StatusAlumni::all()->map(function($status) {
-                            return \App\Models\Alumni::where('id_status_alumni', $status->id_status_alumni)->count();
-                        })) !!},
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(40, 167, 69, 0.8)',
-                            'rgba(255, 205, 86, 0.8)',
-                            'rgba(23, 162, 184, 0.8)'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        } catch (error) {
-            console.error('Error creating charts:', error);
-        }
+        });
     });
 </script>
 @endsection

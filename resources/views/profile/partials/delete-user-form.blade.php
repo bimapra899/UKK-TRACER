@@ -1,4 +1,4 @@
-<section class="mt-8 bg-white rounded-lg shadow-sm overflow-hidden">
+<!-- <section class="mt-8 bg-white rounded-lg shadow-sm overflow-hidden">
     <header class="p-6 bg-gray-50 border-b border-gray-100">
         <h2 class="text-xl font-semibold text-gray-900">
             {{ __('Delete Account') }}
@@ -54,4 +54,4 @@
             </form>
         </x-modal>
     </div>
-</section>
+</section> -->

@@ -67,15 +67,7 @@
                 </div>
             </div>
 
-            <!-- Delete Account Section -->
-            <div class="profile-section">
-                <h3 class="section-header text-danger">
-                    <i class="fas fa-trash-alt me-2"></i>{{ __('Delete Account') }}
-                </h3>
-                <div class="p-4">
-                    @include('profileUser.partials.delete-user-form')
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>

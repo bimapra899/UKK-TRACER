@@ -17,7 +17,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAlumniController;
 use App\Http\Controllers\AdminTracerController;
-use App\Http\Controllers\AdminTestimoniController;
+use App\Http\Controllers\Admin\AdminTestimoniController;
 
 
 Route::get('/', [HomeController::class, 'index']);
@@ -114,7 +114,11 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/tracer/kuliah', [AdminTracerController::class, 'kuliah'])->name('admin.tracer.kuliah');
 
     // Testimonial Management
-    Route::get('/testimoni', [AdminTestimoniController::class, 'index'])->name('admin.testimoni');
+    Route::get('/testimoni', [AdminTestimoniController::class, 'index'])->name('admin.testimoni.index');
+    Route::get('/testimoni/create', [AdminTestimoniController::class, 'create'])->name('admin.testimoni.create');
+    Route::post('/testimoni', [AdminTestimoniController::class, 'store'])->name('admin.testimoni.store');
+    Route::get('/testimoni/{testimoni}/edit', [AdminTestimoniController::class, 'edit'])->name('admin.testimoni.edit');
+    Route::put('/testimoni/{testimoni}', [AdminTestimoniController::class, 'update'])->name('admin.testimoni.update');
     Route::delete('/testimoni/{testimoni}', [AdminTestimoniController::class, 'destroy'])->name('admin.testimoni.destroy');
 });
 

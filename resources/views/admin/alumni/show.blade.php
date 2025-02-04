@@ -4,8 +4,8 @@
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Detail Alumni</h1>
-        <a href="{{ route('admin.alumni.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Kembali
+        <a href="{{ route('admin.alumni.index') }}" class="btn btn-secondary mt-3">
+            <i class="fas fa-arrow-left mb-2"></i> Kembali
         </a>
     </div>
 
@@ -39,12 +39,32 @@
                             <td>{{ $alumni->tempat_lahir }}, {{ $alumni->tgl_lahir }}</td>
                         </tr>
                         <tr>
-                            <th>Konsentrasi</th>
-                            <td>{{ $alumni->konsentrasiKeahlian->nama_konsentrasi ?? '-' }}</td>
+                            <th>Alamat</th>
+                            <td>{{ $alumni->alamat }}</td>
                         </tr>
+                        <!-- <tr>
+                            <th>Konsentrasi Keahlian</th>
+                            <td>{{ $alumni->konsentrasiKeahlian->konsentrasi_keahlian ?? '-' }}</td>
+                        </tr> -->
                         <tr>
                             <th>Tahun Lulus</th>
                             <td>{{ $alumni->tahunLulus->tahun_lulus ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <th>No hp</th>
+                            <td>{{ $alumni->no_hp }}</td>
+                        </tr>
+                        <tr>
+                            <th>Akun fb</th>
+                            <td>{{ $alumni->akun_fb }}</td>
+                        </tr>
+                        <tr>
+                            <th>Akun ig</th>
+                            <td>{{ $alumni->akun_ig }}</td>
+                        </tr>
+                        <tr>
+                            <th>Akun Tiktok</th>
+                            <td>{{ $alumni->akun_tiktok }}</td>
                         </tr>
                     </table>
                 </div>
@@ -65,7 +85,7 @@
                             <td>{{ $alumni->tracerKerja->tracer_kerja_pekerjaan }}</td>
                         </tr>
                         <tr>
-                            <th>Perusahaan</th>
+                            <th>Nama Perusahaan</th>
                             <td>{{ $alumni->tracerKerja->tracer_kerja_nama }}</td>
                         </tr>
                         <tr>
@@ -75,6 +95,18 @@
                         <tr>
                             <th>Status</th>
                             <td>{{ $alumni->tracerKerja->tracer_kerja_status }}</td>
+                        </tr>
+                        <tr>
+                            <th>Lokasi</th>
+                            <td>{{ $alumni->tracerKerja->tracer_kerja_lokasi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Alamat Lengkap</th>
+                            <td>{{ $alumni->tracerKerja->tracer_kerja_alamat }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tanggal Bekerja</th>
+                            <td>{{ $alumni->tracerKerja->tracer_kerja_tgl_mulai }}</td>
                         </tr>
                         <tr>
                             <th>Gaji</th>
@@ -111,6 +143,10 @@
                         <tr>
                             <th>Linear</th>
                             <td>{{ $alumni->tracerKuliah->tracer_kuliah_linier }}</td>
+                        </tr>
+                        <tr>
+                            <th>Alamat</th>
+                            <td>{{ $alumni->tracerKuliah->tracer_kuliah_alamat }}</td>
                         </tr>
                     </table>
                 </div>
