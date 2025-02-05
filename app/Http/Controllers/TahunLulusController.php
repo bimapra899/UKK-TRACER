@@ -21,41 +21,46 @@ class TahunLulusController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tahun' => 'required|string|unique:tb_tahun_lulus,tahun_lulus',
+            'tahun_lulus' => 'required|string|unique:tb_tahun_lulus,tahun_lulus',
         ]);
 
         TahunLulus::create([
-            'tahun_lulus' => $request->tahun,
+            'tahun_lulus' => $request->tahun_lulus,
             'keterangan' => $request->keterangan ?? null,
         ]);
 
         return redirect()->route('admin.tahun_lulus.index')->with('success', 'Tahun lulus berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit($tahun_lulus)
     {
-        $tahun_lulus = TahunLulus::findOrFail($id);
+        $tahun_lulus = TahunLulus::findOrFail($tahun_lulus);
         return view('admin.tahun_lulus.edit', compact('tahun_lulus'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $tahun_lulus)
     {
         $request->validate([
-            'tahun' => 'required|string|unique:tb_tahun_lulus,tahun_lulus,' . $id . ',id_tahun_lulus',
+            'tahun_lulus' => 'required|string|unique:tb_tahun_lulus,tahun_lulus,' . $tahun_lulus . ',id_tahun_lulus',
         ]);
 
-        $tahun_lulus = TahunLulus::findOrFail($id);
+        $tahun_lulus = TahunLulus::findOrFail($tahun_lulus);
         $tahun_lulus->update([
-            'tahun_lulus' => $request->tahun,
+            'tahun_lulus' => $request->tahun_lulus,
             'keterangan' => $request->keterangan ?? null,
         ]);
 
         return redirect()->route('admin.tahun_lulus.index')->with('success', 'Tahun lulus berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy($tahun_lulus)
     {
-        $tahun_lulus = TahunLulus::findOrFail($id);
+        $tahun_lulus = TahunLulus::findOrFail($tahun_lulus);
+        // Cek apakah ada alumni yang menggunakan TahunLulus ini
+        if ($tahun_lulus->alumni()->count() > 0) {
+            return redirect()->route('admin.tahun_lulus.index')->with('error', 'Data Tahun Lulus tidak dapat dihapus karena masih digunakan oleh alumni.');
+        }
+
         $tahun_lulus->delete();
 
         return redirect()->route('admin.tahun_lulus.index')->with('success', 'Tahun lulus berhasil dihapus.');

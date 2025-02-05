@@ -15,6 +15,6 @@ class TahunLulus extends Model
 
     public function alumni()
     {
-        return $this->belongsTo(Alumni::class, 'id_alumni');
+        return $this->hasMany(Alumni::class, 'id_tahun_lulus', 'id_tahun_lulus');
     }
 }

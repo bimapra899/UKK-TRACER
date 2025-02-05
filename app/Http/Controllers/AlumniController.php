@@ -8,6 +8,7 @@ use App\Models\KonsentrasiKeahlian;
 use App\Models\StatusAlumni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AlumniController extends Controller
 {
@@ -31,18 +32,23 @@ class AlumniController extends Controller
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required|date',
             'alamat' => 'required',
-            'no_hp' => 'required',
+            'no_hp' => 'required|max:15', // Add max length validation
             'id_tahun_lulus' => 'required|exists:tb_tahun_lulus,id_tahun_lulus',
             'id_konsentrasi_keahlian' => 'required|exists:tbl_konsentrasi_keahlian,id_konsentrasi_keahlian',
         ]);
 
-        $alumni = new Alumni($request->all());
-        $alumni->user_id = auth()->id();
-        $alumni->email = auth()->user()->email;
-        $alumni->password = Hash::make('password'); // Set default password
-        $alumni->id_status_alumni = 1; // Set default status
-        $alumni->save();
+        try {
+            $alumni = new Alumni($request->all());
+            $alumni->user_id = auth()->id();
+            $alumni->email = auth()->user()->email;
+            $alumni->password = Hash::make('password'); // Set default password
+            $alumni->id_status_alumni = 1; // Set default status
+            $alumni->save();
 
-        return redirect()->route('home')->with('success', 'Registrasi alumni berhasil!');
+            return redirect()->route('home')->with('success', 'Registrasi alumni berhasil!');
+        } catch (\Exception $e) {
+            Log::error('Error saving alumni data: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data alumni.');
+        }
     }
-} 
+}

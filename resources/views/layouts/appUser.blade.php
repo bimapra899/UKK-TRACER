@@ -199,7 +199,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#anjay" role="button" data-bs-toggle="dropdown">
                                     @if(Auth::user()->avatar)
                                         <img class="rounded-circle me-2" src="/avatars/{{ Auth::user()->avatar }}" style="width:35px; height:35px; object-fit:cover;">
                                     @else

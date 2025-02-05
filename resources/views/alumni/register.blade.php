@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
 @section('content')
-<section class="register-alumni" style="margin-top: 100px;">
+<section class="register-alumni" style="margin-top: 10px;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

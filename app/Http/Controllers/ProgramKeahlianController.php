@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProgramKeahlian;
 use App\Models\BidangKeahlian;
+use Illuminate\Validation\Rule;
 
 class ProgramKeahlianController extends Controller
 {
@@ -38,12 +39,22 @@ class ProgramKeahlianController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $messages = [
+            'kode_program_keahlian.required' => 'Kode program keahlian wajib diisi',
+            'kode_program_keahlian.numeric' => 'Kode program keahlian harus berupa angka',
+            'kode_program_keahlian.unique' => 'Kode program keahlian sudah digunakan',
+            'nama_program_keahlian.required' => 'Nama program keahlian wajib diisi',
+        ];
+
         $request->validate([
-            'id_bidang_keahlian' => 'required|exists:tbl_bidang_keahlian,id_bidang_keahlian',
-            'kode_program_keahlian' => 'required|string|max:10|unique:tbl_program_keahlian,kode_program_keahlian',
-            'program_keahlian' => 'required|string|max:255',
-        ]);
+            'kode_program_keahlian' => [
+                'required',
+                'numeric',
+                Rule::unique('tbl_program_keahlian', 'kode_program_keahlian')
+                    ->ignore($request->id_program_keahlian, 'id_program_keahlian')
+            ],
+            'nama_program_keahlian' => 'required'
+        ], $messages);
 
         ProgramKeahlian::create([
             'id_bidang_keahlian' => $request->id_bidang_keahlian,
@@ -76,11 +87,22 @@ class ProgramKeahlianController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $messages = [
+            'kode_program_keahlian.required' => 'Kode program keahlian wajib diisi',
+            'kode_program_keahlian.numeric' => 'Kode program keahlian harus berupa angka',
+            'kode_program_keahlian.unique' => 'Kode program keahlian sudah digunakan',
+            'nama_program_keahlian.required' => 'Nama program keahlian wajib diisi',
+        ];
+
         $request->validate([
-            'id_bidang_keahlian' => 'required|exists:tbl_bidang_keahlian,id_bidang_keahlian',
-            'kode_program_keahlian' => 'required|string|max:10|unique:tbl_program_keahlian,kode_program_keahlian,' . $id,
-            'program_keahlian' => 'required|string|max:255',
-        ]);
+            'kode_program_keahlian' => [
+                'required',
+                'numeric',
+                Rule::unique('tbl_program_keahlian', 'kode_program_keahlian')
+                    ->ignore($id, 'id_program_keahlian')
+            ],
+            'nama_program_keahlian' => 'required'
+        ], $messages);
 
         $programKeahlian = ProgramKeahlian::findOrFail($id);
         $programKeahlian->update([

@@ -7,12 +7,12 @@
             <div class="card">
                 <div class="card-header">Data Profil Sekolah</div>
 
-                <div class="card-body">
+                <!-- <div class="card-body">
                     @if(session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
-                    @endif
+                    @endif -->
 
                     @if(!$sekolah)
                         <a href="{{ route('admin.sekolah.create') }}" class="btn btn-primary mb-3">Tambah Data Sekolah</a>

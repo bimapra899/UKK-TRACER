@@ -16,14 +16,18 @@
         </div>
         @endif
 
-        <form action="{{ route('admin.tahun_lulus.update', $tahun_lulus->id) }}" method="POST">
+        <form action="{{ route('admin.tahun_lulus.update', $tahun_lulus->id_tahun_lulus) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
-                <label for="tahun" class="form-label">Tahun</label>
-                <input type="text" class="form-control" id="tahun" 
-                       name="tahun" value="{{ $tahun_lulus->tahun }}" required>
+                <label for="tahun_lulus" class="form-label">Tahun</label>
+                <input type="text" class="form-control" id="tahun_lulus" 
+                       name="tahun_lulus" value="{{ $tahun_lulus->tahun_lulus }}" required>
             </div>
+            <div class="form-group mb-3">
+                        <label for="keterangan">Keterangan</label>
+                        <input type="text" name="keterangan" id="keterangan" class="form-control" value="{{ $tahun_lulus->keterangan }}" required>
+                    </div>
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ route('admin.tahun_lulus.index') }}" class="btn btn-secondary">Kembali</a>
         </form>

@@ -12,7 +12,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif -->
 
-    <a href="{{ route('admin.testimoni.create') }}" class="btn btn-primary mb-3">Tambah Testimoni</a>
+    <!-- <a href="{{ route('admin.testimoni.create') }}" class="btn btn-primary mb-3">Tambah Testimoni</a> -->
 
     <table class="table table-bordered">
         <thead class="table-dark">
@@ -20,8 +20,7 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Pesan</th>
-                <th>Aksi</th>
-            </tr>
+                </tr>
         </thead>
         <tbody>
             @forelse($testimonis as $index => $testimoni)
@@ -29,14 +28,14 @@
                 <td>{{ $loop->iteration + ($testimonis->currentPage() - 1) * $testimonis->perPage() }}</td>
                 <td>{{ $testimoni->alumni->nama_depan }} {{ $testimoni->alumni->nama_belakang }}</td>
                 <td>{{ $testimoni->testimoni }}</td>
-                <td>
+             
 
-                    <a href="{{ route('admin.testimoni.edit', $testimoni->id_alumni) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <!-- <a href="{{ route('admin.testimoni.edit', $testimoni->id_alumni) }}" class="btn btn-warning btn-sm">Edit</a>
                     <form action="{{ route('admin.testimoni.destroy', $testimoni->id_alumni) }}" method="POST" style="display:inline;">
                         @csrf @method('DELETE')
 
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus testimoni ini?')">Hapus</button>
-                    </form>
+                    </form> -->
                 </td>
             </tr>
             @empty

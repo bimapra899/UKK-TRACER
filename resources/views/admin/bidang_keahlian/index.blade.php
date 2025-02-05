@@ -6,11 +6,11 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Daftar Bidang Keahlian</h1>
 
-        <p class="mb-3">Kode bidang keahlian: 
+        <!-- <p class="mb-3">Kode bidang keahlian: 
             <span>RPL : 098</span>,
             <span>TPM : 097</span>,
             <span>TKR : 096</span>
-        </p>
+        </p> -->
 
         <a href="{{ route('admin.bidang_keahlian.create') }}" class="btn btn-primary mb-3">Tambah Bidang Keahlian</a>
 
